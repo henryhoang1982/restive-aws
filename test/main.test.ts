@@ -19,4 +19,5 @@ test("should print \"Dir Manager\" to console", () => {
     
     // Expect actual not to be null
     expect(actual).not.toBeNull();
+
 });
