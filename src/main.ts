@@ -1,4 +1,4 @@
-import { RestCli } from "./rest-cli";
+import { RestiveCli } from "./rest-cli";
 
 // Init RestCli object
-const restCli = new RestCli();
+const restCli = new RestiveCli();
