@@ -9,8 +9,8 @@ export function configureAWS(options: any): void {
             accessKeyId: options.key,
             secretAccessKey: options.secret
         });
-        console.info("AWS Configured")
+        console.info("AWS Configured");
     } catch (error) {
-        console.error(error);
+        throw new Error("AWS Configuration failed");
     }
 }
