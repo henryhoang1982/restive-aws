@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "rootDir": ".",
+      "outDir": "dist",
+      "strict": false,
+      "target": "ES2018",
+      "lib": ["ES2015"],
+      "module": "commonjs",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "declaration": true,
+      "moduleResolution": "node",
+      "typeRoots": ["node_modules/@types", "types"]
+    }
+  }
