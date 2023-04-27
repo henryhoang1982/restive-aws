@@ -3,7 +3,7 @@ import { configureAWS } from "./aws-config";
 import { createEC2Instance } from "./aws-ec2";
 import AWS from "aws-sdk";
 
-export class RestCli {
+export class RestiveCli {
 
     // OptionValues property
     public optionValues: OptionValues;
