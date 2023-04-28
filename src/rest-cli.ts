@@ -11,10 +11,11 @@ export class RestiveCli {
     // Commander program
     private program: Command;
 
+    private figlet = require('figlet');
+
     constructor() {
         // print ASCI art with figlet to console
-        const figlet = require('figlet');
-        console.log(figlet.textSync("RESTIVE CLI TOOL"));
+        console.log(this.figlet.textSync("RESTIVE CLI TOOL"));
 
         // Initialize Command object
         this.program = new Command();
@@ -22,10 +23,10 @@ export class RestiveCli {
         // Define a default program
         this.program
             .version("0.0.1")
-            .description("A CLI for RESTive")
+            .description("A AWS CLI for RESTIVE\ndependencies:\n\t.aws-sdk\n\t.commander\n\t.figlet")
             .option("-k, --key <value>", "AWS Access Key ID")
             .option("-s, --secret <value>", "AWS Secret Access Key")
-            .option("-e, --ec2 [value]", "Create an EC2 instance")
+            .option("-e, --ec2 <value>", "Create an EC2 instance")
             .option("-t, --tags [value]", "verifies the tags of the EC2 instances")
             .option("-q, --query", "Query EC2 instances")
             .parse(process.argv);
@@ -112,7 +113,22 @@ export class RestiveCli {
             // Calling queryEC2Instances from aws-ec2.ts to query all EC2 instances
             console.info("Querying EC2 instances.......\n");
             queryEC2Instances(new EC2({ region: 'ap-southeast-2' }), {}).then((instances) => {
-                console.log("Instances found:\n", instances);
+                // map instance data to get instance name and instance id and image id
+                // and instance type
+                const instanceData = instances.map((instance) => {
+                    return {
+                        name: instance.Tags?.find((tag) => tag.Key === "Name")?.Value,
+                        id: instance.InstanceId,
+                        imageId: instance.ImageId,
+                        instanceType: instance.InstanceType
+                    }
+                });
+
+                // print instance data to console using figlet with small font
+                console.log(this.figlet.textSync("EC2 INSTANCES", {
+                    font: "Small", whitespaceBreak: true
+                }));
+                console.table(instanceData);
             }).catch((error) => {
                 console.error(error);
             });
