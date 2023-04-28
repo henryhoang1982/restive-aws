@@ -5,7 +5,7 @@
   "main": "src/main.ts",
   "repository": "https://github.com/henryhoang1982/restive-aws.git",
   "author": "Henry Hoang",
-  "license": "GNU",
+  "license": "UNLICENSED",
   "private": false,
   "scripts": {
     "build": "tsc",
