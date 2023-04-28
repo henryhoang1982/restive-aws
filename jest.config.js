@@ -1,5 +1,6 @@
 module.exports = {
-    roots: ['<rootDir>/test'],
+    roots: ['<rootDir>/test', '<rootDir>/src'],
     testMatch: ['**/*.test.ts'],
-    preset: "ts-jest"
+    preset: "ts-jest",
+    collectCoverageFrom: ['<rootDir>/src/**/*.ts']
 }
