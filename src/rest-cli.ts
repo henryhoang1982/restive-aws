@@ -1,7 +1,7 @@
 import { Command, OptionValues } from "commander";
 import { configureAWS } from "./aws-config";
-import { createEC2Instance } from "./aws-ec2";
-import AWS from "aws-sdk";
+import { createEC2Instance, queryEC2Instances } from "./aws-ec2";
+import EC2 from "aws-sdk/clients/ec2";
 
 export class RestiveCli {
 
@@ -12,6 +12,10 @@ export class RestiveCli {
     private program: Command;
 
     constructor() {
+        // print ASCI art with figlet to console
+        const figlet = require('figlet');
+        console.log(figlet.textSync("RESTIVE CLI TOOL"));
+
         // Initialize Command object
         this.program = new Command();
 
@@ -23,6 +27,7 @@ export class RestiveCli {
             .option("-s, --secret <value>", "AWS Secret Access Key")
             .option("-e, --ec2 [value]", "Create an EC2 instance")
             .option("-t, --tags [value]", "verifies the tags of the EC2 instances")
+            .option("-q, --query", "Query EC2 instances")
             .parse(process.argv);
 
         this.optionValues = this.program.opts();
@@ -58,7 +63,7 @@ export class RestiveCli {
             console.log(`EC2 name is provided ${ec2Name}`);
             // Create a free tier EC2 instance with Amazon Linux 2 AMI and name it as ec2Name
             // Calling createEC2Instance from aws-ec2.ts with options
-            createEC2Instance(new AWS.EC2({ region: 'ap-southeast-2' }), {
+            createEC2Instance(new EC2({ region: 'ap-southeast-2' }), {
                 ImageId: "ami-0f6ad051716c81af1",
                 InstanceType: "t2.micro",
                 MaxCount: 1,
@@ -76,6 +81,38 @@ export class RestiveCli {
                 ]
             }).then((instance) => {
                 console.log("Created instance", instance);
+            }).catch((error) => {
+                console.error(error);
+            });
+        } else if (this.optionValues.tags) {
+            // checking if tags file is exists
+            const fs = require('fs');
+            const tagsFile = this.optionValues.tags;
+            if (fs.existsSync(tagsFile)) {
+                // read tags file
+                const tags = JSON.parse(fs.readFileSync(tagsFile, 'utf8'));
+                
+                // Calling queryEC2Instances from aws-ec2.ts with options
+                queryEC2Instances(new EC2({ region: 'ap-southeast-2' }), {
+                    Filters: [
+                        {
+                            Name: "tag:Name",
+                            Values: tags
+                        }
+                    ]
+                }).then((instances) => {
+                    console.log("Instances found", instances);
+                }).catch((error) => {
+                    console.error(error);
+                });
+            } else {
+                console.error("Tags file not found");
+            }
+        } else if (this.optionValues.query) {
+            // Calling queryEC2Instances from aws-ec2.ts to query all EC2 instances
+            console.info("Querying EC2 instances.......\n");
+            queryEC2Instances(new EC2({ region: 'ap-southeast-2' }), {}).then((instances) => {
+                console.log("Instances found:\n", instances);
             }).catch((error) => {
                 console.error(error);
             });
