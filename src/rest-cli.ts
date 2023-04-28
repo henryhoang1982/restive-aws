@@ -23,7 +23,7 @@ export class RestiveCli {
         // Define a default program
         this.program
             .version("0.0.1")
-            .description("A CLI for RESTive")
+            .description("A AWS CLI for RESTIVE\ndependencies:\n\t.aws-sdk\n\t.commander\n\t.figlet")
             .option("-k, --key <value>", "AWS Access Key ID")
             .option("-s, --secret <value>", "AWS Secret Access Key")
             .option("-e, --ec2 <value>", "Create an EC2 instance")
