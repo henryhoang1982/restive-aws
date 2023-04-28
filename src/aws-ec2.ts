@@ -1,8 +1,9 @@
+import EC2 from "aws-sdk/clients/ec2";
 
 // Function to create an EC2 instance from an AMI
 export async function createEC2Instance(
     ec2: AWS.EC2,
-    params: AWS.EC2.RunInstancesRequest
+    params: EC2.RunInstancesRequest
 ): Promise<AWS.EC2.Instance> {
     const data = await ec2.runInstances(params).promise();
     if (!data.Instances) {
@@ -13,9 +14,9 @@ export async function createEC2Instance(
 
 // Function to query EC2 instances
 export async function queryEC2Instances(
-    ec2: AWS.EC2,
-    params: AWS.EC2.DescribeInstancesRequest
-): Promise<AWS.EC2.Instance[]> {
+    ec2: EC2,
+    params: EC2.DescribeInstancesRequest
+): Promise<EC2.Instance[]> {
     const data = await ec2.describeInstances(params).promise();
     if (!data.Reservations) {
         throw new Error("No instances found");
