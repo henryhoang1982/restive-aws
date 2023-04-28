@@ -12,6 +12,10 @@ export class RestiveCli {
     private program: Command;
 
     constructor() {
+        // print ASCI art with figlet to console
+        const figlet = require('figlet');
+        console.log(figlet.textSync("RESTIVE CLI TOOL"));
+
         // Initialize Command object
         this.program = new Command();
 
