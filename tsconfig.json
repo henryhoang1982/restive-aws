@@ -11,5 +11,6 @@
       "inlineSourceMap": true,
       "inlineSources": true,
       "typeRoots": ["node_modules/@types", "node"]
-    }
+    },
+    "exclude": ["node_modules", "dist", "test", "src/**/*.spec.ts"]
   }

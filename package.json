@@ -2,15 +2,15 @@
   "name": "restive-aws",
   "version": "1.0.0",
   "description": "Console utilities for AWS inspection, this is built for Restive folks to learn AWS SDK and copilot experience.",
-  "main": "src/main.ts",
+  "main": "src/app.ts",
   "repository": "https://github.com/henryhoang1982/restive-aws.git",
   "author": "Henry Hoang",
   "license": "UNLICENSED",
   "private": false,
   "scripts": {
     "build": "tsc",
-    "start": "node dist/src/main.js",
-    "test": "jest"
+    "start": "node dist/src/app.js",
+    "test": "jest --coverage --verbose"
   },
   "dependencies": {
     "aws-sdk": "^2.1366.0",
