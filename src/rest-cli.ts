@@ -38,21 +38,15 @@ export class RestiveCli {
 
     // Function to initialize AWS configuration
     private initAWSConfig(): void {
-        // Check if options are provided
-        if (!this.optionValues.key || !this.optionValues.secret) {
-            console.error("Please provide AWS Access Key ID and AWS Secret Access Key");
+        // Calling configureAWS from aws-config.ts with options and catch errors
+        try {
+            configureAWS({
+                key: this.optionValues.key,
+                secret: this.optionValues.secret
+            });
+        } catch (error) {
+            console.error(error);
             process.exit(1);
-        } else {
-            // Calling configureAWS from aws-config.ts with options and catch errors
-            try {
-                configureAWS({
-                    key: this.optionValues.key,
-                    secret: this.optionValues.secret
-                });
-            } catch (error) {
-                console.error(error);
-                process.exit(1);
-            }
         }
     }
 
