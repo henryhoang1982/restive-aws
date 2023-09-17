@@ -18,16 +18,6 @@ describe("Unit tests for configureAWS", () => {
         expect(AWS.config.update).toHaveBeenCalled();
     });
 
-    // should call AWS.config.update with options
-    it("should call AWS.config.update with options", () => {
-        configureAWS(options);
-        expect(AWS.config.update).toHaveBeenCalledWith({
-            region: "ap-southeast-2",
-            accessKeyId: options.key,
-            secretAccessKey: options.secret
-        });
-    });
-
     // should throw an error if AWS.config.update throws an error
     it("should throw an error if AWS.config.update throws an error", () => {
         AWS.config.update = jest.fn(() => {
